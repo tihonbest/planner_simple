@@ -1,0 +1,520 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Индикатор сложности расписания</title>
+<style>
+* { -webkit-box-sizing:border-box; box-sizing:border-box; }
+html { -webkit-text-size-adjust:100%; }
+body { margin:0; background:#f2f2f7; color:#1d1d1f; font:16px/1.5 "Helvetica Neue",Helvetica,Arial,sans-serif; }
+.wrap { max-width:720px; margin:0 auto; padding:24px 16px 48px; }
+h1 { font-size:28px; line-height:1.2; margin:0 0 4px; }
+h2 { font-size:18px; margin:0; }
+.sub, .muted { color:#6e6e73; }
+.sub { margin:0 0 16px; }
+.card { background:#fff; border:1px solid #dcdce0; border-radius:16px; padding:16px; margin-bottom:16px; }
+
+/* Дни недели */
+.tabs { overflow:hidden; background:#fff; border:1px solid #dcdce0; border-radius:16px; padding:4px; margin-bottom:16px; }
+.tab { float:left; width:14.28%; margin:0; padding:6px 0; font:inherit; color:#1d1d1f; text-align:center; background:#fff; border:2px solid #fff; border-radius:12px; -webkit-appearance:none; }
+.tab span { display:block; }
+.tab .k { font-size:13px; font-weight:bold; }
+.tab.active { border-color:#007aff; }
+.tab.today .nm:after { content:""; display:inline-block; width:5px; height:5px; margin-left:4px; border-radius:50%; background:#007aff; vertical-align:middle; }
+.k.good { color:#1f8a3e; } .k.warn { color:#a85d00; } .k.bad { color:#d1241a; } .k.none { color:#6e6e73; font-weight:normal; }
+
+/* Форма */
+.field { margin-bottom:12px; }
+.cols { overflow:hidden; margin-bottom:12px; }
+.cols .field { float:left; width:48%; margin:0; }
+.cols .field.r { float:right; }
+label { display:block; font-size:14px; color:#6e6e73; margin-bottom:4px; }
+input[type=text], input[type=number], select, textarea { display:block; width:100%; min-height:44px; padding:10px 12px; font:inherit; color:#1d1d1f; background:#f2f2f7; border:1px solid #dcdce0; border-radius:10px; }
+input[type=text], input[type=number], textarea { -webkit-appearance:none; }
+input[type=range] { display:block; width:100%; }
+textarea { margin:8px 0; }
+.btn { font:inherit; font-weight:bold; border:0; border-radius:10px; padding:12px 16px; -webkit-appearance:none; }
+.btn.primary { display:block; width:100%; background:#007aff; color:#fff; }
+.btn.ghost { background:#ececf0; color:#6e6e73; padding:8px 14px; font-weight:normal; }
+.btn.ghost.armed { background:#fde4e4; color:#d1241a; }
+.error { color:#d1241a; font-size:14px; margin:10px 0 0; min-height:22px; }
+.io { margin-top:4px; padding-top:14px; border-top:1px solid #e5e5ea; }
+.io .chk { color:#1d1d1f; margin:8px 0; }
+.io-msg { font-size:14px; margin:8px 0 0; min-height:20px; color:#6e6e73; }
+.io-msg.ok { color:#1f8a3e; } .io-msg.err { color:#d1241a; }
+
+/* Результат дня */
+.head { overflow:hidden; margin-bottom:8px; }
+.head h2 { float:left; line-height:34px; }
+.head .btn { float:right; }
+.donut { position:relative; width:220px; height:220px; margin:8px auto 12px; }
+.donut svg { display:block; width:220px; height:220px; }
+.center { position:absolute; left:0; top:50%; width:100%; margin-top:-38px; text-align:center; }
+.center .num { display:block; font-size:44px; line-height:44px; font-weight:bold; }
+.center .cap { display:block; width:110px; margin:2px auto 0; font-size:12px; line-height:15px; color:#6e6e73; }
+.num.good { color:#1f8a3e; } .num.warn { color:#a85d00; } .num.bad { color:#d1241a; }
+.verdict { text-align:center; font-weight:bold; font-size:18px; }
+.advice { text-align:center; margin:4px 0 0; }
+.hint { background:#fff3cc; color:#a85d00; border-radius:10px; padding:8px 12px; margin:10px 0 0; font-size:15px; }
+.meta { overflow:hidden; margin-top:12px; padding-top:12px; border-top:1px solid #e5e5ea; text-align:center; }
+.meta div { float:left; width:50%; }
+.meta b { display:block; font-size:18px; }
+.meta span { font-size:13px; color:#6e6e73; }
+
+/* Список дел (он же легенда диаграммы) */
+.row { display:table; width:100%; border-top:1px solid #e5e5ea; }
+#list .row:first-child { border-top:0; }
+.row > div { display:table-cell; vertical-align:middle; width:1%; padding:6px 0 6px 10px; white-space:nowrap; }
+.row > div.info { width:auto; white-space:normal; }
+.sw { display:inline-block; width:14px; height:14px; border-radius:50%; vertical-align:middle; }
+.t { word-wrap:break-word; }
+.m { font-size:13px; color:#6e6e73; }
+.pill { display:inline-block; min-width:2.2em; text-align:center; padding:2px 10px; border-radius:12px; font-weight:bold; }
+.pill.good { color:#1f8a3e; background:#e0f5e6; } .pill.warn { color:#a85d00; background:#fff3cc; } .pill.bad { color:#d1241a; background:#fde4e4; }
+.icon-btn { font:inherit; font-size:24px; line-height:1; color:#6e6e73; background:none; border:0; padding:8px 12px; -webkit-appearance:none; }
+.note { color:#6e6e73; font-size:13px; text-align:center; }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <h1>Индикатор сложности расписания</h1>
+  <p class="sub">Добавьте уроки, кружки и домашку — получите коэффициент сложности дня.</p>
+
+  <div class="tabs" id="tabs"></div>
+
+  <!-- Форма и импорт -->
+  <div class="card">
+    <form id="form" novalidate autocomplete="off">
+      <div class="field">
+        <label for="name">Название</label>
+        <input id="name" type="text" maxlength="40" placeholder="Например, Математика">
+      </div>
+      <div class="cols">
+        <div class="field">
+          <label for="type">Что это</label>
+          <select id="type"><option>Урок</option><option>Кружок</option><option>Домашка</option></select>
+        </div>
+        <div class="field r">
+          <label for="min">Длительность, мин</label>
+          <input id="min" type="number" pattern="[0-9]*" min="5" max="600" value="45">
+        </div>
+      </div>
+      <div class="field">
+        <label for="diff">Сложность: <b id="diffVal">5</b> из 10</label>
+        <input id="diff" type="range" min="1" max="10" value="5">
+      </div>
+      <button type="submit" class="btn primary">Добавить в день</button>
+    </form>
+    <p id="error" class="error"></p>
+
+    <div class="io">
+      <h2>Импорт из CSV</h2>
+      <label for="file">Файл</label>
+      <input type="file" id="file">
+      <label class="chk"><input type="checkbox" id="replace"> Заменить текущее</label>
+      <label for="paste">Или вставьте CSV текстом</label>
+      <textarea id="paste" rows="5" placeholder="День;Тип;Название;Сложность;Минуты&#10;Пн;Урок;Математика;7;45"></textarea>
+      <button type="button" id="pasteGo" class="btn ghost">Импортировать текст</button>
+      <p id="ioMsg" class="io-msg"></p>
+    </div>
+  </div>
+
+  <!-- Результат дня -->
+  <div class="card">
+    <div class="head">
+      <h2 id="dayTitle">День</h2>
+      <button type="button" id="clear" class="btn ghost">Очистить день</button>
+    </div>
+
+    <div id="empty">
+      <p class="muted" style="margin:4px 0 12px">В этом дне пока ничего нет.</p>
+      <button type="button" id="sample" class="btn ghost">Заполнить примером недели</button>
+    </div>
+
+    <div id="result">
+      <div class="donut">
+        <svg viewBox="0 0 42 42" width="220" height="220" id="pie"></svg>
+        <div class="center"><span class="num" id="k">0</span><span class="cap">коэффициент дня из 10</span></div>
+      </div>
+      <div class="verdict" id="verdict"></div>
+      <p class="advice" id="advice"></p>
+      <div id="hints"></div>
+      <div class="meta">
+        <div><b id="hours">0</b><span>часов занято</span></div>
+        <div><b id="avg">0</b><span>средняя сложность</span></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="card" id="listCard">
+    <h2>Из чего состоит день</h2>
+    <div id="list"></div>
+  </div>
+
+  <p class="note" id="note"></p>
+</div>
+
+<script>
+(function () {
+  'use strict';
+
+  var DAYS = ['Пн', 'Вт', 'Ср', 'Чт', 'Пт', 'Сб', 'Вс'];
+  var FULL = ['Понедельник', 'Вторник', 'Среда', 'Четверг', 'Пятница', 'Суббота', 'Воскресенье'];
+  var LOAD_MAX = 36;   // нагрузка (сложность × часы), которая даёт коэффициент 10
+  var COLORS = ['#0a84ff', '#ff9f0a', '#30d158', '#bf5af2', '#ff375f', '#64d2ff', '#ffd60a', '#8e8e93'];
+  var KEY = 'schedule-load-v1';
+  var SVGNS = 'http://www.w3.org/2000/svg';
+  var TEXT = {
+    good: ['Лёгкий день', 'Можно отдохнуть: делайте уроки без спешки и займитесь тем, что нравится.'],
+    warn: ['Средний день', 'Выделите вечером время на домашку и не сдвигайте сон.'],
+    bad:  ['Тяжёлый день', 'Сил уйдёт много: отдых и сон сегодня важнее новых дел.']
+  };
+
+  function $(id) { return document.getElementById(id); }
+  function isInt(x) { return typeof x === 'number' && isFinite(x) && Math.floor(x) === x; }
+  function show(id, on) { $(id).style.display = on ? '' : 'none'; }
+  function clear(node) { while (node.firstChild) node.removeChild(node.firstChild); }
+  function el(tag, cls, text) {
+    var e = document.createElement(tag);
+    if (cls) e.className = cls;
+    if (text !== undefined) e.textContent = text;
+    return e;
+  }
+
+  // ---------- Данные ----------
+  // days: 7 списков элементов { t: тип, n: название, d: сложность, m: минуты }
+  function todayIdx() { return (new Date().getDay() + 6) % 7; }   // 0 = Пн ... 6 = Вс
+
+  function loadDays() {
+    try {
+      var s = JSON.parse(localStorage.getItem(KEY));
+      if (s && Array.isArray(s.days) && s.days.length === 7) {
+        return s.days.map(function (a) {
+          return Array.isArray(a) ? a.filter(function (i) { return i && i.d >= 1 && i.d <= 10 && i.m > 0; }) : [];
+        });
+      }
+    } catch (e) { /* хранилище недоступно — работаем без него */ }
+    return [[], [], [], [], [], [], []];
+  }
+
+  var days = loadDays();
+  var sel = todayIdx();   // выбранный день (по умолчанию — сегодня)
+  var storageOk = true;
+
+  function save() {
+    try { localStorage.setItem(KEY, JSON.stringify({ days: days })); storageOk = true; }
+    catch (e) { storageOk = false; }
+    updateNote();
+  }
+  function updateNote() {
+    $('note').textContent = storageOk
+      ? 'Нагрузка = сложность × часы. Данные сохраняются автоматически в браузере на этом устройстве.'
+      : 'Браузер не разрешает сохранять данные (возможно, включён приватный режим): после закрытия вкладки расписание пропадёт.';
+  }
+
+  // ---------- Расчёты ----------
+  // Нагрузка элемента = сложность × часы. Коэффициент дня = нагрузка дня / 36 × 10, не больше 10.
+  function stats(items) {
+    var load = 0, min = 0, dm = 0;
+    for (var i = 0; i < items.length; i++) {
+      load += items[i].d * items[i].m / 60;
+      min += items[i].m;
+      dm += items[i].d * items[i].m;
+    }
+    return { load: load, hours: min / 60, avg: min ? dm / min : 0, k: Math.min(10, load / LOAD_MAX * 10) };
+  }
+  function kClass(k) { return k < 4 ? 'good' : k < 7 ? 'warn' : 'bad'; }   // зелёный / жёлтый / красный
+  function fmt(n) { return n.toFixed(1).replace('.', ','); }
+
+  // ---------- Отрисовка ----------
+  function pickDay(i) {
+    return function () { sel = i; disarm(); render(); };
+  }
+
+  function renderTabs() {
+    var box = $('tabs');
+    clear(box);
+    for (var i = 0; i < 7; i++) {
+      var s = stats(days[i]), has = days[i].length > 0;
+      var b = el('button', 'tab' + (i === sel ? ' active' : '') + (i === todayIdx() ? ' today' : ''));
+      b.type = 'button';
+      b.onclick = pickDay(i);
+      b.appendChild(el('span', 'nm', DAYS[i]));
+      b.appendChild(el('span', 'k ' + (has ? kClass(s.k) : 'none'), has ? fmt(s.k) : '–'));
+      box.appendChild(b);
+    }
+  }
+
+  function renderPie(items, total) {
+    var svg = $('pie'), off = 0;
+    function ring(pct, offset, color) {
+      var c = document.createElementNS(SVGNS, 'circle');
+      c.setAttribute('cx', 21); c.setAttribute('cy', 21); c.setAttribute('r', 15.915);
+      c.setAttribute('fill', 'none'); c.setAttribute('stroke-width', 4.4);
+      c.setAttribute('stroke', color);
+      c.setAttribute('stroke-dasharray', pct + ' ' + (100 - pct));
+      c.setAttribute('stroke-dashoffset', 25 - offset);   // старт сверху
+      svg.appendChild(c);
+    }
+    clear(svg);
+    ring(100, 0, '#e5e5ea');
+    for (var i = 0; i < items.length; i++) {
+      var pct = items[i].d * items[i].m / 60 / total * 100;
+      ring(Math.max(pct - (items.length > 1 ? 0.6 : 0), 0.01), off, COLORS[i % COLORS.length]);
+      off += pct;
+    }
+  }
+
+  function removeItem(i) {
+    return function () { days[sel].splice(i, 1); save(); render(); };
+  }
+
+  function render() {
+    var items = days[sel], s = stats(items), has = items.length > 0;
+    renderTabs();
+    $('dayTitle').textContent = FULL[sel];
+    show('empty', !has);
+    show('result', has);
+    show('listCard', has);
+    show('clear', has);
+    if (!has) return;
+
+    var cls = kClass(s.k);
+    $('k').textContent = fmt(s.k);
+    $('k').className = 'num ' + cls;
+    $('verdict').textContent = TEXT[cls][0];
+    $('advice').textContent = TEXT[cls][1];
+    $('hours').textContent = fmt(s.hours);
+    $('avg').textContent = fmt(s.avg);
+
+    // Подсказки: тяжёлый завтрашний день и риск для сна
+    var hints = $('hints');
+    clear(hints);
+    var tomorrow = days[(sel + 1) % 7], next = stats(tomorrow);
+    if (tomorrow.length && next.k >= 7 && s.k < 7) {
+      hints.appendChild(el('div', 'hint', 'Завтра тяжёлый день (' + fmt(next.k) + '): сделайте часть уроков заранее, сегодня.'));
+    }
+    if (s.hours > 9) {
+      hints.appendChild(el('div', 'hint', 'Занято больше 9 часов. Следите, чтобы хватило времени на сон (8–10 часов).'));
+    }
+
+    renderPie(items, s.load);
+
+    // Список = легенда диаграммы
+    var list = $('list');
+    clear(list);
+    for (var i = 0; i < items.length; i++) {
+      var it = items[i];
+      var share = Math.round(it.d * it.m / 60 / s.load * 100);
+      var row = el('div', 'row');
+
+      var c1 = el('div'), sw = el('span', 'sw');
+      sw.style.background = COLORS[i % COLORS.length];
+      c1.appendChild(sw);
+
+      var info = el('div', 'info');
+      info.appendChild(el('div', 't', it.n));
+      info.appendChild(el('div', 'm', it.t + ' · ' + it.m + ' мин · ' + share + '% нагрузки'));
+
+      var c3 = el('div');
+      c3.appendChild(el('span', 'pill ' + (it.d <= 3 ? 'good' : it.d <= 6 ? 'warn' : 'bad'), String(it.d)));
+
+      var c4 = el('div'), del = el('button', 'icon-btn', '×');
+      del.type = 'button';
+      del.onclick = removeItem(i);
+      c4.appendChild(del);
+
+      row.appendChild(c1); row.appendChild(info); row.appendChild(c3); row.appendChild(c4);
+      list.appendChild(row);
+    }
+  }
+
+  // ---------- Форма ----------
+  var nameEl = $('name'), typeEl = $('type'), minEl = $('min'), diffEl = $('diff'), errorEl = $('error');
+
+  function showDiff() { $('diffVal').textContent = diffEl.value; }
+  diffEl.addEventListener('input', showDiff);
+  diffEl.addEventListener('change', showDiff);
+  nameEl.addEventListener('input', function () { errorEl.textContent = ''; });
+  minEl.addEventListener('input', function () { errorEl.textContent = ''; });
+
+  // Добавление в выбранный день
+  $('form').addEventListener('submit', function (e) {
+    e.preventDefault();
+    var m = Number(minEl.value);
+    if (!isInt(m) || m < 5 || m > 600) {
+      errorEl.textContent = 'Длительность — целое число минут от 5 до 600.';
+      minEl.focus();
+      return;
+    }
+    var t = typeEl.value;
+    days[sel].push({ t: t, n: nameEl.value.trim() || t, d: Number(diffEl.value), m: m });
+    save();
+    errorEl.textContent = '';
+    nameEl.value = '';
+    nameEl.focus();
+    render();
+  });
+
+  // «Очистить день»: первое нажатие просит подтвердить, второе — стирает
+  var clearBtn = $('clear'), timer = null;
+  function disarm() {
+    clearTimeout(timer); timer = null;
+    clearBtn.className = 'btn ghost';
+    clearBtn.textContent = 'Очистить день';
+  }
+  clearBtn.addEventListener('click', function () {
+    if (timer === null) {
+      clearBtn.className = 'btn ghost armed';
+      clearBtn.textContent = 'Точно очистить?';
+      timer = setTimeout(disarm, 3000);
+    } else {
+      disarm();
+      days[sel] = [];
+      save();
+      render();
+    }
+  });
+
+  // Пример недели, чтобы сразу увидеть, как всё работает
+  $('sample').addEventListener('click', function () {
+    function U(n, d, m) { return { t: 'Урок', n: n, d: d, m: m || 45 }; }
+    function K(n, d, m) { return { t: 'Кружок', n: n, d: d, m: m }; }
+    function H(d, m) { return { t: 'Домашка', n: 'Домашнее задание', d: d, m: m }; }
+    days = [
+      [U('Математика', 7), U('Физика', 8), U('Русский', 5), U('История', 4), K('Робототехника', 6, 90), H(7, 90)],
+      [U('Математика', 7), U('Химия', 7), U('Английский', 5), U('Физкультура', 2), H(5, 60)],
+      [U('Физика', 8), U('Литература', 4), U('Информатика', 6), U('Биология', 5), K('Музыка', 5, 60), H(7, 90)],
+      [U('Русский', 5), U('География', 3), U('Обществознание', 4), U('Физкультура', 2), H(4, 45)],
+      [U('Математика', 7), U('Физика', 8), U('Химия', 7), U('Английский', 5), K('Плавание', 4, 90), H(6, 60)],
+      [K('Робототехника', 6, 90), H(5, 60)],
+      [H(6, 90)]
+    ];
+    save();
+    render();
+  });
+
+  // ---------- Импорт CSV ----------
+  var NL = '\n', CR = '\r', TAB = '\t', QUOT = '"';
+  var ioMsg = $('ioMsg');
+  function say(text, ok) { ioMsg.textContent = text; ioMsg.className = 'io-msg ' + (ok ? 'ok' : 'err'); }
+
+  // Разбор CSV: кавычки, двойные кавычки внутри ячейки, переносы строк внутри кавычек
+  function parseCSV(text, delim) {
+    var rows = [], row = [], field = '', quoted = false;
+    for (var i = 0; i < text.length; i++) {
+      var c = text.charAt(i);
+      if (quoted) {
+        if (c === QUOT) {
+          if (text.charAt(i + 1) === QUOT) { field += QUOT; i++; } else quoted = false;
+        } else field += c;
+      } else if (c === QUOT) quoted = true;
+      else if (c === delim) { row.push(field); field = ''; }
+      else if (c === NL || c === CR) {
+        if (c === CR && text.charAt(i + 1) === NL) i++;
+        row.push(field); rows.push(row); row = []; field = '';
+      } else field += c;
+    }
+    if (field !== '' || row.length) { row.push(field); rows.push(row); }
+    return rows.filter(function (r) {
+      return r.some(function (x) { return x.trim() !== ''; });
+    });
+  }
+
+  function indexOfCI(arr, s) {
+    for (var i = 0; i < arr.length; i++) if (arr[i].toLowerCase() === s) return i;
+    return -1;
+  }
+  // День: Пн / понедельник / 1
+  function parseDay(s) {
+    s = s.trim().toLowerCase();
+    var i = indexOfCI(DAYS, s);
+    if (i < 0) i = indexOfCI(FULL, s);
+    if (i >= 0) return i;
+    return /^[1-7]$/.test(s) ? Number(s) - 1 : -1;
+  }
+  // Тип: Урок / Кружок / Домашка (пусто = Урок)
+  function parseType(s) {
+    s = s.trim().toLowerCase();
+    if (!s || s.indexOf('урок') === 0) return 'Урок';
+    if (s.indexOf('круж') === 0) return 'Кружок';
+    if (s.indexOf('дом') === 0) return 'Домашка';
+    return null;
+  }
+  function num(s) { return Number(String(s).trim().replace(',', '.')); }
+
+  function importText(raw) {
+    var text = raw.charCodeAt(0) === 0xFEFF ? raw.slice(1) : raw;
+    var first = text.split(NL, 1)[0];
+    // Разделитель (; , или табуляция) определяем по первой строке
+    var delim = ';', best = first.split(';').length, cand = [',', TAB];
+    for (var j = 0; j < cand.length; j++) {
+      var cnt = first.split(cand[j]).length;
+      if (cnt > best) { best = cnt; delim = cand[j]; }
+    }
+
+    var fresh = [[], [], [], [], [], [], []], ok = 0, skipped = 0;
+    var rows = parseCSV(text, delim);
+    for (var idx = 0; idx < rows.length; idx++) {
+      var r = rows[idx];
+      var di = parseDay(r[0] || '');
+      if (di < 0) { if (idx > 0) skipped++; continue; }   // первая строка без дня — заголовок
+      var t = parseType(r[1] || ''), d = num(r[3]), m = num(r[4]);
+      if (ok >= 500 || !t || !isInt(d) || d < 1 || d > 10 || !isInt(m) || m < 5 || m > 600) { skipped++; continue; }
+      var n = String(r[2] || '').trim().replace(/^'(?=[=+@-])/, '').slice(0, 40) || t;
+      fresh[di].push({ t: t, n: n, d: d, m: m });
+      ok++;
+    }
+    if (!ok) return say('Не нашёл подходящих строк. Нужны столбцы: День; Тип; Название; Сложность (1–10); Минуты (5–600).', false);
+
+    if ($('replace').checked) days = fresh;
+    else for (var i = 0; i < 7; i++) days[i] = days[i].concat(fresh[i]);
+    save();
+    render();
+    say('Импортировано записей: ' + ok + (skipped ? ', пропущено строк с ошибками: ' + skipped : '') + '.', true);
+  }
+
+  // Из файла: сначала UTF-8, при «кракозябрах» — windows-1251 (так сохраняет Excel на Windows)
+  var fileEl = $('file');
+  function readFile(f, enc, cb) {
+    var r = new FileReader();
+    r.onload = function () { cb(r.result); };
+    r.onerror = function () { fileEl.value = ''; say('Не удалось прочитать файл.', false); };
+    r.readAsText(f, enc);
+  }
+  function finish(t) { fileEl.value = ''; importText(t); }   // value = '' — чтобы выбрать тот же файл ещё раз
+
+  fileEl.addEventListener('change', function () {
+    var f = fileEl.files && fileEl.files[0];
+    if (!f) return;
+    if (f.size > 1e6) { fileEl.value = ''; return say('Файл слишком большой (больше 1 МБ).', false); }
+    readFile(f, 'UTF-8', function (t) {
+      if (t.indexOf('\uFFFD') < 0) return finish(t);
+      readFile(f, 'windows-1251', finish);
+    });
+  });
+
+  // Вставка CSV текстом
+  $('pasteGo').addEventListener('click', function () {
+    var t = $('paste').value.trim();
+    if (!t) return say('Вставьте текст CSV в поле выше.', false);
+    importText(t);
+  });
+
+  // Новый день: если страница осталась открытой за полночь, переходим на сегодняшний день
+  var lastDate = new Date().toDateString();
+  setInterval(function () {
+    var now = new Date().toDateString();
+    if (now === lastDate) return;
+    lastDate = now;
+    sel = todayIdx();
+    render();
+  }, 60000);
+
+  render();
+  updateNote();
+})();
+</script>
+</body>
+</html>
