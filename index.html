@@ -77,6 +77,15 @@ textarea { margin:8px 0; }
 </style>
 </head>
 <body>
+<script>
+// Если в старом браузере что-то сломается, ошибка покажется красной плашкой вверху страницы
+window.onerror = function (msg, url, line) {
+  var d = document.createElement('div');
+  d.style.cssText = 'background:#fde4e4;color:#d1241a;padding:10px 14px;margin:8px;border-radius:10px;font-size:14px';
+  d.appendChild(document.createTextNode('Ошибка: ' + msg + ' (строка ' + line + ')'));
+  document.body.insertBefore(d, document.body.firstChild);
+};
+</script>
 <div class="wrap">
   <h1>Индикатор сложности расписания</h1>
   <p class="sub">Добавьте уроки, кружки и домашку — получите коэффициент сложности дня.</p>
@@ -157,8 +166,6 @@ textarea { margin:8px 0; }
 
 <script>
 (function () {
-  'use strict';
-
   var DAYS = ['Пн', 'Вт', 'Ср', 'Чт', 'Пт', 'Сб', 'Вс'];
   var FULL = ['Понедельник', 'Вторник', 'Среда', 'Четверг', 'Пятница', 'Суббота', 'Воскресенье'];
   var LOAD_MAX = 36;   // нагрузка (сложность × часы), которая даёт коэффициент 10
@@ -238,7 +245,7 @@ textarea { margin:8px 0; }
     for (var i = 0; i < 7; i++) {
       var s = stats(days[i]), has = days[i].length > 0;
       var b = el('button', 'tab' + (i === sel ? ' active' : '') + (i === todayIdx() ? ' today' : ''));
-      b.type = 'button';
+      b.setAttribute('type', 'button');
       b.onclick = pickDay(i);
       b.appendChild(el('span', 'nm', DAYS[i]));
       b.appendChild(el('span', 'k ' + (has ? kClass(s.k) : 'none'), has ? fmt(s.k) : '–'));
@@ -321,7 +328,7 @@ textarea { margin:8px 0; }
       c3.appendChild(el('span', 'pill ' + (it.d <= 3 ? 'good' : it.d <= 6 ? 'warn' : 'bad'), String(it.d)));
 
       var c4 = el('div'), del = el('button', 'icon-btn', '×');
-      del.type = 'button';
+      del.setAttribute('type', 'button');
       del.onclick = removeItem(i);
       c4.appendChild(del);
 
