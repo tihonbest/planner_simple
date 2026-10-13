@@ -74,6 +74,140 @@ textarea { margin:8px 0; }
 .pill.good { color:#1f8a3e; background:#e0f5e6; } .pill.warn { color:#a85d00; background:#fff3cc; } .pill.bad { color:#d1241a; background:#fde4e4; }
 .icon-btn { font:inherit; font-size:24px; line-height:1; color:#6e6e73; background:none; border:0; padding:8px 12px; -webkit-appearance:none; }
 .note { color:#6e6e73; font-size:13px; text-align:center; }
+
+/* ===== Погода и настройки ===== */
+.weather { background:#fff; border:1px solid #dcdce0; border-radius:12px; padding:10px 14px; margin-bottom:8px; font-size:15px; line-height:1.4; }
+.weather .w-now { font-weight:bold; }
+.weather .w-day { color:#6e6e73; font-size:14px; margin-top:2px; }
+.weather .w-day.bad { color:#d1241a; }
+.weather .btn { margin-top:8px; }
+.set-group { margin:0 0 18px; }
+.set-group h3 { font-size:13px; text-transform:uppercase; letter-spacing:1px; color:#6e6e73; margin:0 0 8px; }
+.set-row { margin:0 0 12px; }
+.set-help { color:#6e6e73; font-size:13px; line-height:1.4; margin:6px 0 0; }
+.chkrow { display:block; font-size:16px; color:#1d1d1f; margin:0 0 10px; padding:6px 0; }
+.chkrow input { width:22px; height:22px; margin:0 10px 0 0; vertical-align:middle; }
+input[type=time] { display:block; width:100%; min-height:44px; padding:10px 12px; font:inherit; color:#1d1d1f; background:#f2f2f7; border:1px solid #dcdce0; border-radius:10px; }
+.seg { overflow:hidden; background:#ececf0; border:1px solid #dcdce0; border-radius:10px; padding:2px; }
+.seg button { float:left; margin:0; padding:10px 2px; font:inherit; font-size:14px; color:#1d1d1f; background:transparent; border:2px solid transparent; border-radius:8px; -webkit-appearance:none; }
+.seg.n2 button { width:50%; } .seg.n3 button { width:33.33%; }
+.seg button.on { background:#fff; font-weight:bold; border-color:#007aff; }
+.swatches { overflow:hidden; }
+.swatch { float:left; width:25%; padding:4px 0; margin:0; font:inherit; font-size:12px; color:#1d1d1f; text-align:center; background:none; border:0; -webkit-appearance:none; }
+.swatch .dot { display:block; width:34px; height:34px; margin:0 auto 4px; border-radius:50%; border:3px solid transparent; }
+.swatch.on { font-weight:bold; }
+.swatch.on .dot { border-color:#1d1d1f; }
+
+/* ===== Неделя целиком ===== */
+.wk { display:table; width:100%; table-layout:fixed; margin:8px 0 4px; }
+.wk .c { display:table-cell; vertical-align:bottom; text-align:center; padding:4px 0; border-radius:10px; }
+.wk .c.sel { background:#ececf0; }
+.wk .wv { font-size:13px; font-weight:bold; margin-bottom:3px; }
+.wk .tr { position:relative; height:96px; width:60%; max-width:34px; margin:0 auto; }
+.wk .fl { position:absolute; left:0; bottom:0; width:100%; border-radius:6px; }
+.wk .fl.good { background:#1f8a3e; } .wk .fl.warn { background:#a85d00; } .wk .fl.bad { background:#d1241a; }
+.wk .fl.none { height:3px; background:#dcdce0; }
+.wk .wn { font-size:13px; color:#6e6e73; margin-top:4px; }
+.wk .c.today .wn { color:#007aff; font-weight:bold; }
+.meta.w3 div { width:33.33%; }
+.meta b.good { color:#1f8a3e; } .meta b.warn { color:#a85d00; } .meta b.bad { color:#d1241a; }
+.week-line { margin:12px 0 0; font-size:15px; }
+
+/* ===== Тёмная тема: класс dark на теле страницы ===== */
+body.dark { background:#1c1c1e; color:#f2f2f7; }
+body.dark .sub, body.dark .muted, body.dark label, body.dark .m, body.dark .meta span, body.dark .center .cap,
+body.dark .set-help, body.dark .set-group h3, body.dark .weather .w-day, body.dark .wk .wn, body.dark .io-msg { color:#98989d; }
+body.dark .card, body.dark .tabs, body.dark .weather { background:#2c2c2e; border-color:#3a3a3c; }
+body.dark .tab { background:#2c2c2e; border-color:#2c2c2e; color:#f2f2f7; }
+body.dark input[type=text], body.dark input[type=number], body.dark input[type=time], body.dark select, body.dark textarea { background:#1c1c1e; border-color:#48484a; color:#f2f2f7; }
+body.dark .btn.ghost { background:#3a3a3c; color:#d1d1d6; }
+body.dark .btn.ghost.armed { background:#4a2020; color:#ff6961; }
+body.dark .io, body.dark .meta, body.dark .row { border-color:#3a3a3c; }
+body.dark .io .chk, body.dark .chkrow { color:#f2f2f7; }
+body.dark .hint { background:#3a2f10; color:#ffd60a; }
+body.dark .k.good, body.dark .num.good, body.dark .meta b.good { color:#30d158; }
+body.dark .k.warn, body.dark .num.warn, body.dark .meta b.warn { color:#ffd60a; }
+body.dark .k.bad, body.dark .num.bad, body.dark .meta b.bad { color:#ff6961; }
+body.dark .k.none, body.dark .icon-btn { color:#98989d; }
+body.dark .pill.good { color:#30d158; background:#163524; }
+body.dark .pill.warn { color:#ffd60a; background:#3a2f10; }
+body.dark .pill.bad { color:#ff6961; background:#3d1b1b; }
+body.dark .error, body.dark .io-msg.err, body.dark .weather .w-day.bad { color:#ff6961; }
+body.dark .io-msg.ok { color:#30d158; }
+body.dark .seg { background:#1c1c1e; border-color:#48484a; }
+body.dark .seg button { color:#f2f2f7; }
+body.dark .seg button.on { background:#3a3a3c; }
+body.dark .swatch { color:#f2f2f7; }
+body.dark .swatch.on .dot { border-color:#f2f2f7; }
+body.dark .wk .c.sel { background:#3a3a3c; }
+body.dark .wk .fl.good { background:#30d158; } body.dark .wk .fl.warn { background:#ffd60a; } body.dark .wk .fl.bad { background:#ff6961; }
+body.dark .wk .fl.none { background:#48484a; }
+
+/* Цветовые темы: класс a-<название> на теле страницы */
+body.a-blue .btn.primary { background:#007aff; color:#fff; }
+body.a-blue .tab.active, body.a-blue .seg button.on { border-color:#007aff; }
+body.a-blue .tab.today .nm:after { background:#007aff; }
+body.a-blue .wk .c.today .wn { color:#007aff; }
+body.dark.a-blue .btn.primary { background:#0a84ff; color:#ffffff; }
+body.dark.a-blue .tab.active, body.dark.a-blue .seg button.on { border-color:#0a84ff; }
+body.dark.a-blue .tab.today .nm:after { background:#0a84ff; }
+body.dark.a-blue .wk .c.today .wn { color:#0a84ff; }
+body.a-teal .btn.primary { background:#0e8fa0; color:#fff; }
+body.a-teal .tab.active, body.a-teal .seg button.on { border-color:#0e8fa0; }
+body.a-teal .tab.today .nm:after { background:#0e8fa0; }
+body.a-teal .wk .c.today .wn { color:#0e8fa0; }
+body.dark.a-teal .btn.primary { background:#40c8e0; color:#04202a; }
+body.dark.a-teal .tab.active, body.dark.a-teal .seg button.on { border-color:#40c8e0; }
+body.dark.a-teal .tab.today .nm:after { background:#40c8e0; }
+body.dark.a-teal .wk .c.today .wn { color:#40c8e0; }
+body.a-green .btn.primary { background:#1a8f44; color:#fff; }
+body.a-green .tab.active, body.a-green .seg button.on { border-color:#1a8f44; }
+body.a-green .tab.today .nm:after { background:#1a8f44; }
+body.a-green .wk .c.today .wn { color:#1a8f44; }
+body.dark.a-green .btn.primary { background:#30d158; color:#04210f; }
+body.dark.a-green .tab.active, body.dark.a-green .seg button.on { border-color:#30d158; }
+body.dark.a-green .tab.today .nm:after { background:#30d158; }
+body.dark.a-green .wk .c.today .wn { color:#30d158; }
+body.a-orange .btn.primary { background:#d9480f; color:#fff; }
+body.a-orange .tab.active, body.a-orange .seg button.on { border-color:#d9480f; }
+body.a-orange .tab.today .nm:after { background:#d9480f; }
+body.a-orange .wk .c.today .wn { color:#d9480f; }
+body.dark.a-orange .btn.primary { background:#ff9f0a; color:#2a1600; }
+body.dark.a-orange .tab.active, body.dark.a-orange .seg button.on { border-color:#ff9f0a; }
+body.dark.a-orange .tab.today .nm:after { background:#ff9f0a; }
+body.dark.a-orange .wk .c.today .wn { color:#ff9f0a; }
+body.a-pink .btn.primary { background:#e5306a; color:#fff; }
+body.a-pink .tab.active, body.a-pink .seg button.on { border-color:#e5306a; }
+body.a-pink .tab.today .nm:after { background:#e5306a; }
+body.a-pink .wk .c.today .wn { color:#e5306a; }
+body.dark.a-pink .btn.primary { background:#ff375f; color:#ffffff; }
+body.dark.a-pink .tab.active, body.dark.a-pink .seg button.on { border-color:#ff375f; }
+body.dark.a-pink .tab.today .nm:after { background:#ff375f; }
+body.dark.a-pink .wk .c.today .wn { color:#ff375f; }
+body.a-purple .btn.primary { background:#9b51e0; color:#fff; }
+body.a-purple .tab.active, body.a-purple .seg button.on { border-color:#9b51e0; }
+body.a-purple .tab.today .nm:after { background:#9b51e0; }
+body.a-purple .wk .c.today .wn { color:#9b51e0; }
+body.dark.a-purple .btn.primary { background:#bf5af2; color:#ffffff; }
+body.dark.a-purple .tab.active, body.dark.a-purple .seg button.on { border-color:#bf5af2; }
+body.dark.a-purple .tab.today .nm:after { background:#bf5af2; }
+body.dark.a-purple .wk .c.today .wn { color:#bf5af2; }
+body.a-indigo .btn.primary { background:#5856d6; color:#fff; }
+body.a-indigo .tab.active, body.a-indigo .seg button.on { border-color:#5856d6; }
+body.a-indigo .tab.today .nm:after { background:#5856d6; }
+body.a-indigo .wk .c.today .wn { color:#5856d6; }
+body.dark.a-indigo .btn.primary { background:#7d7aff; color:#ffffff; }
+body.dark.a-indigo .tab.active, body.dark.a-indigo .seg button.on { border-color:#7d7aff; }
+body.dark.a-indigo .tab.today .nm:after { background:#7d7aff; }
+body.dark.a-indigo .wk .c.today .wn { color:#7d7aff; }
+body.a-graphite .btn.primary { background:#3a3a3c; color:#fff; }
+body.a-graphite .tab.active, body.a-graphite .seg button.on { border-color:#3a3a3c; }
+body.a-graphite .tab.today .nm:after { background:#3a3a3c; }
+body.a-graphite .wk .c.today .wn { color:#3a3a3c; }
+body.dark.a-graphite .btn.primary { background:#aeaeb2; color:#111113; }
+body.dark.a-graphite .tab.active, body.dark.a-graphite .seg button.on { border-color:#aeaeb2; }
+body.dark.a-graphite .tab.today .nm:after { background:#aeaeb2; }
+body.dark.a-graphite .wk .c.today .wn { color:#aeaeb2; }
 </style>
 </head>
 <body>
@@ -86,14 +220,80 @@ window.onerror = function (msg, url, line) {
   document.body.insertBefore(d, document.body.firstChild);
 };
 </script>
+<script>
+// Тема и цвет применяются до отрисовки страницы, чтобы не было мигания
+(function () {
+  var cls = '', accents = ['blue', 'teal', 'green', 'orange', 'pink', 'purple', 'indigo', 'graphite'], a = 'blue', i, dark = false;
+  try {
+    var st = JSON.parse(localStorage.getItem('schedule-settings-v1'));
+    if (st) {
+      for (i = 0; i < accents.length; i++) if (accents[i] === st.accent) a = st.accent;
+      if (st.theme === 'dark') dark = true;
+      else if (st.theme === 'auto' && window.matchMedia) dark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+    }
+  } catch (e) {}
+  document.body.className = (dark ? 'dark ' : '') + 'a-' + a;
+})();
+</script>
 <div class="wrap">
   <h1>Индикатор сложности расписания</h1>
   <p class="sub">Добавьте уроки, кружки и домашку — получите коэффициент сложности дня.</p>
+
+  <!-- Погода и настройки -->
+  <div class="topline">
+    <div class="weather" id="weather" style="display:none"></div>
+    <button type="button" class="btn ghost" id="openSettings" style="display:block;width:100%;margin-bottom:16px">Настройки</button>
+  </div>
+
+  <div class="card" id="settings" style="display:none">
+    <div class="head"><h2>Настройки</h2><button type="button" class="btn ghost" id="setClose">Закрыть</button></div>
+
+    <div class="set-group">
+      <h3>Внешний вид</h3>
+      <div class="set-row"><label>Тема</label><div class="seg n3" id="segTheme"></div></div>
+      <div class="set-row"><label>Цвет</label><div class="swatches" id="swatches"></div></div>
+      <p class="set-help">«Авто» берёт тему устройства, если браузер это умеет. На iOS 6 системной тёмной темы нет, поэтому там «Авто» работает как «Светлая».</p>
+    </div>
+
+    <div class="set-group">
+      <h3>Погода</h3>
+      <label class="chkrow"><input type="checkbox" id="swWeather"> Учитывать погоду</label>
+      <div class="set-row" id="rowCity"><label>Город</label><div class="seg n2" id="segCity"></div></div>
+      <p class="set-help">Плохая погода увеличивает нагрузку дня: туман и морось ×1,05, дождь и снег ×1,1, сильный дождь и снег ×1,15, гроза ×1,25. Ясная и облачная погода не влияет. Данные: <a href="https://open-meteo.com/">Open-Meteo.com</a>. Если на этом устройстве погода не загружается, это ограничение старого браузера (современный HTTPS), остальные функции работают.</p>
+    </div>
+
+    <div class="set-group">
+      <h3>Сон</h3>
+      <label class="chkrow"><input type="checkbox" id="swSleep"> Учитывать сон</label>
+      <div id="rowSleep">
+        <div class="set-row"><label for="age">Возраст</label><input id="age" type="number" pattern="[0-9]*" min="6" max="99" placeholder="Например, 14"></div>
+        <div class="cols">
+          <div class="field"><label for="bed">Ложусь спать</label><input id="bed" type="time" value="23:00"></div>
+          <div class="field r"><label for="wake">Встаю</label><input id="wake" type="time" value="07:00"></div>
+        </div>
+        <p class="set-help" id="sleepInfo"></p>
+      </div>
+      <p class="set-help">Нормы сна (Национальный фонд сна, США): 6–13 лет 9–11 часов, 14–17 лет 8–10, 18–64 года 7–9, от 65 лет 7–8. Если сна меньше нормы, нагрузка каждого дня растёт на 10% за каждый недостающий час (максимум на 30%). Это общие рекомендации, а не медицинский совет.</p>
+    </div>
+
+    <div class="set-group">
+      <h3>Расчёт</h3>
+      <div class="set-row"><label>Строгость оценки</label><div class="seg n3" id="segStrict"></div></div>
+      <p class="set-help" id="strictHelp"></p>
+    </div>
+
+    <div class="set-group">
+      <h3>Данные</h3>
+      <button type="button" class="btn ghost" id="resetAll">Удалить всё расписание</button>
+      <p class="set-help">Расписание и настройки хранятся только в браузере на этом устройстве. Чтобы перенести расписание на другое устройство, используйте экспорт в CSV.</p>
+    </div>
+  </div>
 
   <div class="tabs" id="tabs"></div>
 
   <!-- Форма и импорт -->
   <div class="card">
+    <div class="hint" id="storageWarn" style="display:none;margin:0 0 12px"></div>
     <form id="form" novalidate autocomplete="off">
       <div class="field">
         <label for="name">Название</label>
@@ -116,6 +316,14 @@ window.onerror = function (msg, url, line) {
       <button type="submit" class="btn primary">Добавить в день</button>
     </form>
     <p id="error" class="error"></p>
+
+    <div class="io">
+      <h2>Экспорт в CSV</h2>
+      <p class="muted" style="margin:4px 0 8px">На этом устройстве нельзя скачать файл, поэтому расписание показывается текстом: скопируйте его и сохраните в заметках или отправьте себе.</p>
+      <button type="button" id="exp" class="btn ghost">Показать расписание текстом</button>
+      <textarea id="csvOut" rows="6" readonly style="display:none"></textarea>
+      <p id="expMsg" class="io-msg"></p>
+    </div>
 
     <div class="io">
       <h2>Импорт из CSV</h2>
@@ -161,14 +369,20 @@ window.onerror = function (msg, url, line) {
     <div id="list"></div>
   </div>
 
-  <p class="note" id="note"></p>
+  <!-- Обзор недели -->
+  <div class="card" id="weekCard" style="display:none">
+    <h2>Неделя целиком</h2>
+    <div class="wk" id="weekBars"></div>
+    <div class="meta w3" id="weekMeta"></div>
+    <p class="week-line" id="weekLine"></p>
+    <div id="weekHints"></div>
+  </div>
 </div>
 
 <script>
 (function () {
   var DAYS = ['Пн', 'Вт', 'Ср', 'Чт', 'Пт', 'Сб', 'Вс'];
   var FULL = ['Понедельник', 'Вторник', 'Среда', 'Четверг', 'Пятница', 'Суббота', 'Воскресенье'];
-  var LOAD_MAX = 36;   // нагрузка (сложность × часы), которая даёт коэффициент 10
   var COLORS = ['#0a84ff', '#ff9f0a', '#30d158', '#bf5af2', '#ff375f', '#64d2ff', '#ffd60a', '#8e8e93'];
   var KEY = 'schedule-load-v1';
   var SVGNS = 'http://www.w3.org/2000/svg';
@@ -177,6 +391,210 @@ window.onerror = function (msg, url, line) {
     warn: ['Средний день', 'Выделите вечером время на домашку и не сдвигайте сон.'],
     bad:  ['Тяжёлый день', 'Сил уйдёт много: отдых и сон сегодня важнее новых дел.']
   };
+
+  // ---------- Настройки ----------
+  var SETTINGS_KEY = 'schedule-settings-v1';
+  var DEFAULTS = { theme: 'auto', accent: 'blue', city: 'spb', weather: true, strict: 'normal', sleep: true, age: null, bed: '23:00', wake: '07:00' };
+  var TIME_RE = /^([01]\d|2[0-3]):[0-5]\d$/;
+  var CITIES = {
+    spb: { name: 'Санкт-Петербург', lat: 59.9386, lon: 30.3141 },
+    msk: { name: 'Москва', lat: 55.7558, lon: 37.6173 }
+  };
+  var LOAD_BY = { soft: 45, normal: 36, hard: 27 };   // нагрузка дня (сложность × часы), которая даёт коэффициент 10
+  var OPTIONS = {
+    theme: [['auto', 'Авто'], ['light', 'Светлая'], ['dark', 'Тёмная']],
+    city: [['spb', 'Санкт-Петербург'], ['msk', 'Москва']],
+    strict: [['soft', 'Мягкая'], ['normal', 'Обычная'], ['hard', 'Строгая']]
+  };
+  // [ключ, название, цвет кружка, оттенок диаграммы (0–360), насыщенность диаграммы]
+  var ACCENTS = [
+    ['blue', 'Синий', '#0a84ff', 211, 90],
+    ['teal', 'Бирюзовый', '#30b0c7', 187, 75],
+    ['green', 'Зелёный', '#30d158', 140, 60],
+    ['orange', 'Оранжевый', '#ff9f0a', 28, 95],
+    ['pink', 'Розовый', '#ff375f', 345, 85],
+    ['purple', 'Фиолетовый', '#bf5af2', 280, 70],
+    ['indigo', 'Индиго', '#5e5ce6', 241, 65],
+    ['graphite', 'Графит', '#8e8e93', 0, 0]
+  ];
+  var STRICT_HELP = {
+    soft: 'Мягкая: день считается тяжёлым позже (10 из 10 при нагрузке 45).',
+    normal: 'Обычная: 6 часов дел со сложностью 6 дают 10 из 10 (нагрузка 36).',
+    hard: 'Строгая: тяжёлый день наступает раньше (10 из 10 при нагрузке 27).'
+  };
+  var PALETTE_SHIFT = [0, 8, -8, 16, -16, 24, -24, 32];
+  var PALETTE_LIGHT = [52, 66, 40, 60, 46, 72, 34, 56];
+
+  function inList(list, val) {
+    for (var i = 0; i < list.length; i++) if (list[i][0] === val) return true;
+    return false;
+  }
+  function loadSettings() {
+    var s = {}, k, v;
+    for (k in DEFAULTS) if (DEFAULTS.hasOwnProperty(k)) s[k] = DEFAULTS[k];
+    try {
+      v = JSON.parse(localStorage.getItem(SETTINGS_KEY));
+      if (v && typeof v === 'object') {
+        if (inList(OPTIONS.theme, v.theme)) s.theme = v.theme;
+        if (inList(ACCENTS, v.accent)) s.accent = v.accent;
+        if (inList(OPTIONS.city, v.city)) s.city = v.city;
+        if (inList(OPTIONS.strict, v.strict)) s.strict = v.strict;
+        if (typeof v.weather === 'boolean') s.weather = v.weather;
+        if (typeof v.sleep === 'boolean') s.sleep = v.sleep;
+        if (isInt(v.age) && v.age >= 6 && v.age <= 99) s.age = v.age;
+        if (typeof v.bed === 'string' && TIME_RE.test(v.bed)) s.bed = v.bed;
+        if (typeof v.wake === 'string' && TIME_RE.test(v.wake)) s.wake = v.wake;
+      }
+    } catch (e) { /* настроек нет или хранилище недоступно: берём стандартные */ }
+    return s;
+  }
+  var settings = loadSettings();
+  function loadMax() { return LOAD_BY[settings.strict]; }
+
+  function isDark() {
+    if (settings.theme === 'dark') return true;
+    if (settings.theme === 'light') return false;
+    try { return !!(window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches); } catch (e) { return false; }
+  }
+
+  // Цвета диаграммы: оттенки рядом с цветом темы, разной светлоты (в формате #rrggbb, чтобы подошло старому браузеру)
+  function hslToHex(h, s, l) {
+    s = s / 100; l = l / 100;
+    var a = s * Math.min(l, 1 - l);
+    function f(n) {
+      var k = (n + h / 30) % 12;
+      var c = l - a * Math.max(-1, Math.min(k - 3, Math.min(9 - k, 1)));
+      var x = Math.round(255 * c).toString(16);
+      return x.length < 2 ? '0' + x : x;
+    }
+    return '#' + f(0) + f(8) + f(4);
+  }
+  function updatePalette() {
+    var a = ACCENTS[0], i, sat;
+    for (i = 0; i < ACCENTS.length; i++) if (ACCENTS[i][0] === settings.accent) a = ACCENTS[i];
+    COLORS.length = 0;
+    for (i = 0; i < PALETTE_SHIFT.length; i++) {
+      sat = a[4] === 0 ? 0 : Math.max(35, a[4] - (i % 3) * 8);
+      COLORS.push(hslToHex((a[3] + PALETTE_SHIFT[i] + 360) % 360, sat, PALETTE_LIGHT[i]));
+    }
+  }
+  function applySettings() {
+    document.body.className = (isDark() ? 'dark ' : '') + 'a-' + settings.accent;
+    updatePalette();
+  }
+
+  // ---------- Сон ----------
+  function toMin(t) { var p = t.split(':'); return Number(p[0]) * 60 + Number(p[1]); }
+  function sleepNorm(age) {   // норма сна в часах по возрасту (рекомендации Национального фонда сна, США)
+    if (age <= 13) return [9, 11];
+    if (age <= 17) return [8, 10];
+    if (age <= 64) return [7, 9];
+    return [7, 8];
+  }
+  // Сколько человек спит и чего не хватает до нормы; null, если сон не учитывается или данных мало
+  function sleepInfo() {
+    if (!settings.sleep || !settings.age) return null;
+    var dur = (toMin(settings.wake) - toMin(settings.bed) + 1440) % 1440;   // минут (с переходом через полночь)
+    if (dur === 0) return null;
+    var norm = sleepNorm(settings.age);
+    var deficit = Math.max(0, norm[0] - dur / 60);                          // недостающие часы до нижней границы нормы
+    return { dur: dur, lo: norm[0], hi: norm[1], deficit: deficit, mult: 1 + Math.min(0.3, deficit * 0.1) };
+  }
+  function sleepMult() { var i = sleepInfo(); return i ? i.mult : 1; }
+  function sleepNormText() { return settings.sleep && settings.age ? sleepNorm(settings.age).join('–') : '8–10'; }
+  function fmtDur(min) {
+    var h = Math.floor(min / 60), m = min % 60;
+    return h && m ? h + ' ч ' + m + ' мин' : h ? h + ' ч' : m + ' мин';
+  }
+
+  // ---------- Погода (Open-Meteo, ключ не нужен) ----------
+  var WEATHER_KEY = 'schedule-weather-v1';
+  function weatherUrl(c) {
+    return 'https://api.open-meteo.com/v1/forecast?latitude=' + c.lat + '&longitude=' + c.lon +
+      '&current=temperature_2m,weather_code&daily=weather_code&timezone=Europe%2FMoscow&forecast_days=7';
+  }
+  function loadWeather() {
+    if (!settings.weather) return null;
+    try {
+      var w = JSON.parse(localStorage.getItem(WEATHER_KEY + '-' + settings.city));
+      if (w && w.daily && new Date().getTime() - w.t < 6 * 3600 * 1000) return w;   // старше 6 часов не используем
+    } catch (e) { /* нет сохранённой погоды */ }
+    return null;
+  }
+  var weather = loadWeather();                      // { t, temp, code, daily: { 'ГГГГ-ММ-ДД': код } }
+  var weatherState = weather ? 'ok' : 'loading';    // 'loading' | 'ok' | 'error'
+  var weatherRetries = 0, weatherReq = 0;           // weatherReq: устаревшие ответы игнорируются
+
+  // Код погоды WMO → название и множитель нагрузки дня (1 = не влияет)
+  function weatherInfo(code) {
+    if (code <= 3) return { text: ['ясно', 'малооблачно', 'облачно', 'пасмурно'][code], mult: 1 };
+    if (code === 45 || code === 48) return { text: 'туман', mult: 1.05 };
+    if (code >= 51 && code <= 57) return { text: 'морось', mult: 1.05 };
+    if (code === 65 || code === 67 || code === 82) return { text: 'сильный дождь', mult: 1.15 };
+    if ((code >= 61 && code <= 66) || code === 80 || code === 81) return { text: 'дождь', mult: 1.1 };
+    if (code === 75 || code === 86) return { text: 'сильный снег', mult: 1.15 };
+    if ((code >= 71 && code <= 77) || code === 85) return { text: 'снег', mult: 1.1 };
+    if (code >= 95) return { text: 'гроза', mult: 1.25 };
+    return { text: 'погода неизвестна', mult: 1 };
+  }
+  function pad2(n) { return n < 10 ? '0' + n : String(n); }
+  function ymd(d) { return d.getFullYear() + '-' + pad2(d.getMonth() + 1) + '-' + pad2(d.getDate()); }
+  // Дата ближайшего дня недели с индексом i (сегодня или в ближайшие 6 дней)
+  function dateOfDay(i) { var d = new Date(); d.setDate(d.getDate() + (i - todayIdx() + 7) % 7); return ymd(d); }
+  function dayWeather(i) {
+    if (!settings.weather || !weather || !weather.daily) return null;
+    var c = weather.daily[dateOfDay(i)];
+    return typeof c === 'number' ? weatherInfo(c) : null;
+  }
+  function dayMult(i) { var w = dayWeather(i); return w ? w.mult : 1; }
+
+  // Запрос через XMLHttpRequest: в старых браузерах нет fetch и Promise
+  function httpGetJSON(url, ok, fail) {
+    var x, done = false, timer;
+    try { x = new XMLHttpRequest(); } catch (e) { fail(); return; }
+    timer = setTimeout(function () {
+      if (done) return;
+      done = true;
+      try { x.abort(); } catch (e) { /* уже закрыт */ }
+      fail();
+    }, 10000);
+    x.onreadystatechange = function () {
+      if (x.readyState !== 4 || done) return;
+      done = true;
+      clearTimeout(timer);
+      if (x.status === 200) {
+        var j = null;
+        try { j = JSON.parse(x.responseText); } catch (e) { /* неверный ответ */ }
+        if (j) ok(j); else fail();
+      } else fail();
+    };
+    try { x.open('GET', url, true); x.send(null); }
+    catch (e) { done = true; clearTimeout(timer); fail(); }
+  }
+  function fetchWeather() {
+    if (!settings.weather) return;
+    var city = settings.city, req = ++weatherReq;
+    httpGetJSON(weatherUrl(CITIES[city]), function (j) {
+      if (req !== weatherReq) return;   // за это время сменили город или выключили погоду
+      var daily = {}, i, time = (j.daily && j.daily.time) || [], codes = (j.daily && j.daily.weather_code) || [];
+      if (!j.current || typeof j.current.temperature_2m !== 'number' || typeof j.current.weather_code !== 'number') {
+        weatherFailed(req);
+        return;
+      }
+      for (i = 0; i < time.length; i++) if (typeof codes[i] === 'number') daily[time[i]] = codes[i];
+      weather = { t: new Date().getTime(), temp: j.current.temperature_2m, code: j.current.weather_code, daily: daily };
+      weatherState = 'ok'; weatherRetries = 0;
+      try { localStorage.setItem(WEATHER_KEY + '-' + city, JSON.stringify(weather)); } catch (e) { /* не страшно */ }
+      render();
+    }, function () { weatherFailed(req); });
+  }
+  function weatherFailed(req) {
+    if (req !== weatherReq) return;
+    // нет сети: остаётся последняя сохранённая погода; если её нет, показываем ошибку и пробуем ещё раз
+    if (!weather) weatherState = 'error';
+    if (weatherRetries++ < 3) setTimeout(fetchWeather, 60000);
+    render();
+  }
 
   function $(id) { return document.getElementById(id); }
   function isInt(x) { return typeof x === 'number' && isFinite(x) && Math.floor(x) === x; }
@@ -215,21 +633,23 @@ window.onerror = function (msg, url, line) {
     updateNote();
   }
   function updateNote() {
-    $('note').textContent = storageOk
-      ? 'Нагрузка = сложность × часы. Данные сохраняются автоматически в браузере на этом устройстве.'
-      : 'Браузер не разрешает сохранять данные (возможно, включён приватный режим): после закрытия вкладки расписание пропадёт.';
+    var w = $('storageWarn');
+    w.style.display = storageOk ? 'none' : '';
+    w.textContent = storageOk ? '' : 'Браузер не разрешает сохранять данные (возможно, включён приватный режим): после закрытия вкладки расписание и настройки пропадут. Сделайте экспорт в CSV, чтобы не потерять расписание.';
   }
 
   // ---------- Расчёты ----------
-  // Нагрузка элемента = сложность × часы. Коэффициент дня = нагрузка дня / 36 × 10, не больше 10.
-  function stats(items) {
+  // Нагрузка элемента = сложность × часы. Коэффициент дня = нагрузка дня × погода × недосып / порог × 10, не больше 10.
+  // Порог по умолчанию 36, в настройках можно сделать мягче или строже.
+  function stats(items, dayIdx) {
     var load = 0, min = 0, dm = 0;
     for (var i = 0; i < items.length; i++) {
       load += items[i].d * items[i].m / 60;
       min += items[i].m;
       dm += items[i].d * items[i].m;
     }
-    return { load: load, hours: min / 60, avg: min ? dm / min : 0, k: Math.min(10, load / LOAD_MAX * 10) };
+    var m = dayIdx === undefined ? 1 : dayMult(dayIdx) * sleepMult();
+    return { load: load, hours: min / 60, avg: min ? dm / min : 0, k: Math.min(10, load * m / loadMax() * 10), mult: m };
   }
   function kClass(k) { return k < 4 ? 'good' : k < 7 ? 'warn' : 'bad'; }   // зелёный / жёлтый / красный
   function fmt(n) { return n.toFixed(1).replace('.', ','); }
@@ -243,13 +663,131 @@ window.onerror = function (msg, url, line) {
     var box = $('tabs');
     clear(box);
     for (var i = 0; i < 7; i++) {
-      var s = stats(days[i]), has = days[i].length > 0;
+      var s = stats(days[i], i), has = days[i].length > 0;
       var b = el('button', 'tab' + (i === sel ? ' active' : '') + (i === todayIdx() ? ' today' : ''));
       b.setAttribute('type', 'button');
       b.onclick = pickDay(i);
       b.appendChild(el('span', 'nm', DAYS[i]));
       b.appendChild(el('span', 'k ' + (has ? kClass(s.k) : 'none'), has ? fmt(s.k) : '–'));
       box.appendChild(b);
+    }
+  }
+
+  function fmtTemp(t) {
+    var r = Math.round(t);
+    return (r > 0 ? '+' + r : r < 0 ? '\u2212' + Math.abs(r) : '0') + ' °C';
+  }
+  function renderWeather() {
+    var box = $('weather');
+    clear(box);
+    if (!settings.weather) { box.style.display = 'none'; return; }
+    box.style.display = '';
+    if (!weather) {
+      if (weatherState === 'loading') { box.appendChild(el('div', 'w-now', 'Загружаю погоду…')); return; }
+      box.appendChild(el('div', 'w-day', 'Погоду загрузить не удалось: нет интернета или старый браузер не поддерживает современный HTTPS. Коэффициент считается без погоды.'));
+      var retry = el('button', 'btn ghost', 'Повторить');
+      retry.setAttribute('type', 'button');
+      retry.onclick = function () { weatherState = 'loading'; weatherRetries = 0; render(); fetchWeather(); };
+      box.appendChild(retry);
+      return;
+    }
+    box.appendChild(el('div', 'w-now', CITIES[settings.city].name + ': сейчас ' + fmtTemp(weather.temp) + ', ' + weatherInfo(weather.code).text));
+    var w = dayWeather(sel);
+    if (w) {
+      var note = w.mult > 1 ? 'нагрузка дня +' + Math.round((w.mult - 1) * 100) + '%' : 'на сложность не влияет';
+      box.appendChild(el('div', 'w-day' + (w.mult > 1 ? ' bad' : ''), FULL[sel] + ': ' + w.text + ', ' + note));
+    }
+  }
+
+  // ---------- Обзор недели ----------
+  // Серии тяжёлых дней подряд (неделя повторяется, поэтому воскресенье идёт перед понедельником)
+  function heavyRuns(heavy) {
+    var all = true, i, j, run, runs = [];
+    for (i = 0; i < 7; i++) if (!heavy[i]) all = false;
+    if (all) return [];
+    for (i = 0; i < 7; i++) {
+      if (heavy[i] && !heavy[(i + 6) % 7]) {
+        run = [];
+        for (j = i; heavy[j % 7] && run.length < 7; j++) run.push(j % 7);
+        if (run.length >= 2) runs.push(run);
+      }
+    }
+    return runs;
+  }
+  function weekSummary() {
+    var ks = [], filled = [], heavy = [], i, st, sum = 0, hours = 0, heavyCount = 0, byK;
+    for (i = 0; i < 7; i++) {
+      st = days[i].length ? stats(days[i], i) : null;
+      ks.push(st);
+      heavy.push(!!st && st.k >= 7);
+      if (st) { filled.push({ i: i, k: st.k, hours: st.hours }); sum += st.k; hours += st.hours; }
+      if (heavy[i]) heavyCount++;
+    }
+    if (!filled.length) return null;
+    byK = filled.slice().sort(function (a, b) { return a.k - b.k; });
+    return {
+      ks: ks, filled: filled, avg: sum / filled.length, heavyCount: heavyCount,
+      allHeavy: heavyCount === 7, runs: heavyRuns(heavy), hours: hours,
+      heaviest: byK[byK.length - 1], lightest: byK[0]
+    };
+  }
+  function pickWeekDay(i) {
+    return function () { sel = i; disarm(); render(); window.scrollTo(0, 0); };
+  }
+  function renderWeek() {
+    var w = weekSummary();
+    show('weekCard', !!w);
+    if (!w) return;
+
+    var bars = $('weekBars'), i, st, c, tr, fl;
+    clear(bars);
+    for (i = 0; i < 7; i++) {
+      st = w.ks[i];
+      c = el('div', 'c' + (i === sel ? ' sel' : '') + (i === todayIdx() ? ' today' : ''));
+      c.setAttribute('role', 'button');
+      c.onclick = pickWeekDay(i);
+      c.appendChild(el('div', 'wv', st ? fmt(st.k) : '–'));
+      tr = el('div', 'tr');
+      fl = el('div', 'fl ' + (st ? kClass(st.k) : 'none'));
+      if (st) fl.style.height = Math.max(4, Math.round(st.k * 9.6)) + 'px';
+      tr.appendChild(fl);
+      c.appendChild(tr);
+      c.appendChild(el('div', 'wn', DAYS[i]));
+      bars.appendChild(c);
+    }
+
+    var meta = $('weekMeta');
+    clear(meta);
+    function stat(value, label, cls) {
+      var d = el('div');
+      d.appendChild(el('b', cls || '', value));
+      d.appendChild(el('span', '', label));
+      meta.appendChild(d);
+    }
+    stat(fmt(w.avg), 'средний коэффициент', kClass(w.avg));
+    stat(String(w.heavyCount), 'тяжёлых дней');
+    stat(fmt(w.hours), 'часов за неделю');
+
+    $('weekLine').textContent = w.filled.length > 1
+      ? 'Тяжелее всего: ' + FULL[w.heaviest.i] + ' (' + fmt(w.heaviest.k) + '). Легче всего: ' + FULL[w.lightest.i] + ' (' + fmt(w.lightest.k) + ').'
+      : 'Заполните остальные дни, чтобы увидеть неделю целиком.';
+
+    var hints = $('weekHints');
+    clear(hints);
+    if (w.allHeavy) {
+      hints.appendChild(el('div', 'hint', 'Все дни недели тяжёлые: отдыхать почти некогда. Проверьте, что можно убрать или сдвинуть.'));
+    }
+    function runHint(run) {
+      var names = [], j;
+      for (j = 0; j < run.length; j++) names.push(DAYS[run[j]]);
+      hints.appendChild(el('div', 'hint', 'Тяжёлые дни идут подряд: ' + names.join(', ') + '. Оставьте между ними время на отдых.'));
+    }
+    for (i = 0; i < w.runs.length; i++) runHint(w.runs[i]);
+    if (w.heaviest.k >= 7 && w.lightest.i !== w.heaviest.i && w.heaviest.k - w.lightest.k >= 2) {
+      hints.appendChild(el('div', 'hint', 'Часть дел из дня «' + FULL[w.heaviest.i] + '» можно сделать заранее в более лёгкий день: ' + FULL[w.lightest.i] + '.'));
+    }
+    if (w.filled.length > 1 && w.heavyCount === 0) {
+      hints.appendChild(el('p', 'muted', 'Тяжёлых дней нет: нагрузка на неделю распределена спокойно.'));
     }
   }
 
@@ -265,7 +803,7 @@ window.onerror = function (msg, url, line) {
       svg.appendChild(c);
     }
     clear(svg);
-    ring(100, 0, '#e5e5ea');
+    ring(100, 0, isDark() ? '#3a3a3c' : '#e5e5ea');
     for (var i = 0; i < items.length; i++) {
       var pct = items[i].d * items[i].m / 60 / total * 100;
       ring(Math.max(pct - (items.length > 1 ? 0.6 : 0), 0.01), off, COLORS[i % COLORS.length]);
@@ -278,8 +816,10 @@ window.onerror = function (msg, url, line) {
   }
 
   function render() {
-    var items = days[sel], s = stats(items), has = items.length > 0;
+    var items = days[sel], s = stats(items, sel), has = items.length > 0;
     renderTabs();
+    renderWeather();
+    renderWeek();
     $('dayTitle').textContent = FULL[sel];
     show('empty', !has);
     show('result', has);
@@ -298,12 +838,20 @@ window.onerror = function (msg, url, line) {
     // Подсказки: тяжёлый завтрашний день и риск для сна
     var hints = $('hints');
     clear(hints);
-    var tomorrow = days[(sel + 1) % 7], next = stats(tomorrow);
+    var tomorrow = days[(sel + 1) % 7], next = stats(tomorrow, (sel + 1) % 7);
     if (tomorrow.length && next.k >= 7 && s.k < 7) {
       hints.appendChild(el('div', 'hint', 'Завтра тяжёлый день (' + fmt(next.k) + '): сделайте часть уроков заранее, сегодня.'));
     }
+    var w = dayWeather(sel);
+    if (w && w.mult > 1) {
+      hints.appendChild(el('div', 'hint', 'Погода (' + w.text + ') увеличила нагрузку дня на ' + Math.round((w.mult - 1) * 100) + '%.'));
+    }
+    var sl = sleepInfo();
+    if (sl && sl.deficit > 0) {
+      hints.appendChild(el('div', 'hint', 'Недосып: вы спите ' + fmtDur(sl.dur) + ', а для вашего возраста нужно ' + sl.lo + '–' + sl.hi + ' часов. Нагрузка дня увеличена на ' + Math.round((sl.mult - 1) * 100) + '%.'));
+    }
     if (s.hours > 9) {
-      hints.appendChild(el('div', 'hint', 'Занято больше 9 часов. Следите, чтобы хватило времени на сон (8–10 часов).'));
+      hints.appendChild(el('div', 'hint', 'Занято больше 9 часов. Следите, чтобы хватило времени на сон (' + sleepNormText() + ' часов).'));
     }
 
     renderPie(items, s.load);
@@ -509,6 +1057,164 @@ window.onerror = function (msg, url, line) {
     importText(t);
   });
 
+  // ---------- Экспорт CSV текстом (скачать файл на старом устройстве нельзя) ----------
+  var DELIM = ';', APOS = "'";
+  function csvCell(v) {
+    var s = String(v);
+    if (/^[=+@-]/.test(s) || s.charAt(0) === TAB || s.charAt(0) === CR) s = APOS + s;
+    var need = s.indexOf(QUOT) >= 0 || s.indexOf(DELIM) >= 0 || s.indexOf(',') >= 0 || s.indexOf(NL) >= 0 || s.indexOf(CR) >= 0;
+    return need ? QUOT + s.split(QUOT).join(QUOT + QUOT) + QUOT : s;
+  }
+  function buildCSV() {
+    var lines = ['День;Тип;Название;Сложность;Минуты'], i, j, it;
+    for (i = 0; i < 7; i++) {
+      for (j = 0; j < days[i].length; j++) {
+        it = days[i][j];
+        lines.push([csvCell(DAYS[i]), csvCell(it.t), csvCell(it.n), csvCell(it.d), csvCell(it.m)].join(DELIM));
+      }
+    }
+    return lines.join(NL);
+  }
+  $('exp').addEventListener('click', function () {
+    var count = 0, i, out = $('csvOut'), msg = $('expMsg');
+    for (i = 0; i < 7; i++) count += days[i].length;
+    if (!count) { out.style.display = 'none'; msg.textContent = 'Расписание пустое: экспортировать нечего.'; msg.className = 'io-msg err'; return; }
+    out.style.display = 'block';
+    out.value = buildCSV();
+    out.focus();
+    out.select();
+    try { out.setSelectionRange(0, out.value.length); } catch (e) { /* не поддерживается */ }
+    msg.textContent = 'Записей: ' + count + '. Текст выделен: скопируйте его (удерживайте палец на тексте) и сохраните.';
+    msg.className = 'io-msg ok';
+  });
+
+  // ---------- Окно настроек ----------
+  function saveSettings() {
+    try { localStorage.setItem(SETTINGS_KEY, JSON.stringify(settings)); } catch (e) { /* не страшно */ }
+  }
+  // После смены города или переключателя погоды: берём сохранённую погоду нового города и запрашиваем свежую
+  function weatherReset() {
+    weatherReq++;
+    weather = loadWeather();
+    weatherState = weather ? 'ok' : 'loading';
+    weatherRetries = 0;
+    render();
+    fetchWeather();
+  }
+  function setSetting(key, value) {
+    settings[key] = value;
+    saveSettings();
+    applySettings();
+    renderSettings();
+    if (key === 'city' || key === 'weather') weatherReset(); else render();
+  }
+  function segButton(key, opt) {
+    var b = el('button', '', opt[1]);
+    b.setAttribute('type', 'button');
+    b.setAttribute('data-val', opt[0]);
+    b.onclick = function () { setSetting(key, opt[0]); };
+    return b;
+  }
+  function swatchButton(opt) {
+    var b = el('button', 'swatch'), dot = el('span', 'dot');
+    b.setAttribute('type', 'button');
+    b.setAttribute('data-val', opt[0]);
+    dot.style.background = opt[2];
+    b.appendChild(dot);
+    b.appendChild(document.createTextNode(opt[1]));
+    b.onclick = function () { setSetting('accent', opt[0]); };
+    return b;
+  }
+  function buildSettings() {
+    var i, keys = [['segTheme', 'theme'], ['segCity', 'city'], ['segStrict', 'strict']], k;
+    for (k = 0; k < keys.length; k++) {
+      for (i = 0; i < OPTIONS[keys[k][1]].length; i++) $(keys[k][0]).appendChild(segButton(keys[k][1], OPTIONS[keys[k][1]][i]));
+    }
+    for (i = 0; i < ACCENTS.length; i++) $('swatches').appendChild(swatchButton(ACCENTS[i]));
+    $('swWeather').onclick = function () { setSetting('weather', this.checked); };
+    $('swSleep').onclick = function () { setSetting('sleep', this.checked); };
+    function onAge() {
+      var v = Number($('age').value);
+      setSetting('age', (isInt(v) && v >= 6 && v <= 99) ? v : null);
+    }
+    function onTime(id) {
+      return function () { var v = $(id).value; if (TIME_RE.test(v)) setSetting(id, v); };
+    }
+    var evs = ['input', 'change'], e;
+    for (e = 0; e < evs.length; e++) {
+      $('age').addEventListener(evs[e], onAge);
+      $('bed').addEventListener(evs[e], onTime('bed'));
+      $('wake').addEventListener(evs[e], onTime('wake'));
+    }
+  }
+  // Подставляет сохранённые значения в поля (при вводе поля не перезаписываются)
+  function syncSleepInputs() {
+    $('age').value = settings.age === null ? '' : String(settings.age);
+    $('bed').value = settings.bed;
+    $('wake').value = settings.wake;
+  }
+  function markOn(id, val, base) {
+    var kids = $(id).childNodes, i;
+    for (i = 0; i < kids.length; i++) {
+      kids[i].className = base + (kids[i].getAttribute('data-val') === val ? (base ? ' on' : 'on') : '');
+    }
+  }
+  function renderSleepInfo() {
+    var box = $('sleepInfo');
+    if (!settings.sleep) { box.textContent = ''; return; }
+    if (!settings.age) { box.textContent = 'Укажите возраст от 6 до 99 лет, чтобы рассчитать норму сна.'; return; }
+    var i = sleepInfo();
+    if (!i) { box.textContent = 'Время, когда вы ложитесь и встаёте, не должно совпадать.'; return; }
+    box.textContent = 'Вы спите ' + fmtDur(i.dur) + '. Норма для вашего возраста: ' + i.lo + '–' + i.hi + ' часов. ' +
+      (i.deficit > 0
+        ? 'Не хватает ' + fmtDur(Math.round(i.deficit * 60)) + ': нагрузка каждого дня +' + Math.round((i.mult - 1) * 100) + '%.'
+        : 'Сна хватает, на коэффициент это не влияет.');
+  }
+  function renderSettings() {
+    markOn('segTheme', settings.theme, '');
+    markOn('segCity', settings.city, '');
+    markOn('segStrict', settings.strict, '');
+    markOn('swatches', settings.accent, 'swatch');
+    $('swWeather').checked = settings.weather;
+    $('swSleep').checked = settings.sleep;
+    show('rowCity', settings.weather);
+    show('rowSleep', settings.sleep);
+    renderSleepInfo();
+    $('strictHelp').textContent = STRICT_HELP[settings.strict];
+  }
+  function toggleSettings(on) {
+    show('settings', on);
+    $('openSettings').textContent = on ? 'Скрыть настройки' : 'Настройки';
+    if (!on) armReset(false);
+    if (on) window.scrollTo(0, 0);
+  }
+  $('openSettings').addEventListener('click', function () { toggleSettings($('settings').style.display === 'none'); });
+  $('setClose').addEventListener('click', function () { toggleSettings(false); });
+
+  // Удаление всего расписания: нужно нажать два раза подряд
+  var resetArmed = false, resetTimer = null;
+  function armReset(on) {
+    resetArmed = on;
+    var b = $('resetAll');
+    b.className = on ? 'btn ghost armed' : 'btn ghost';
+    b.textContent = on ? 'Нажмите ещё раз, чтобы удалить всё' : 'Удалить всё расписание';
+    clearTimeout(resetTimer);
+    if (on) resetTimer = setTimeout(function () { armReset(false); }, 4000);
+  }
+  $('resetAll').addEventListener('click', function () {
+    if (!resetArmed) { armReset(true); return; }
+    days = [[], [], [], [], [], [], []];
+    save();
+    render();
+    armReset(false);
+  });
+
+  // Изменения, сделанные в другой вкладке, применяются и здесь
+  window.addEventListener('storage', function (e) {
+    if (e.key === KEY) { days = loadDays(); render(); }
+    else if (e.key === SETTINGS_KEY) { settings = loadSettings(); applySettings(); syncSleepInputs(); renderSettings(); weatherReset(); }
+  });
+
   // Новый день: если страница осталась открытой за полночь, переходим на сегодняшний день
   var lastDate = new Date().toDateString();
   setInterval(function () {
@@ -519,8 +1225,14 @@ window.onerror = function (msg, url, line) {
     render();
   }, 60000);
 
+  buildSettings();
+  applySettings();
+  syncSleepInputs();
+  renderSettings();
   render();
   updateNote();
+  fetchWeather();
+  setInterval(fetchWeather, 30 * 60 * 1000);   // обновлять погоду раз в полчаса
 })();
 </script>
 </body>
