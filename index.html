@@ -916,6 +916,7 @@ window.onerror = function (msg, url, line) {
   $('type').addEventListener('change', function () {
     $('startTimeWrap').style.display = this.value === 'Урок' ? '' : 'none';
   });
+  $('startTimeWrap').style.display = typeEl.value === 'Урок' ? '' : 'none';
 
   // Добавление в выбранный день
   $('form').addEventListener('submit', function (e) {
