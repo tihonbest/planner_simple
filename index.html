@@ -309,6 +309,10 @@ window.onerror = function (msg, url, line) {
           <input id="min" type="number" pattern="[0-9]*" min="5" max="600" value="45">
         </div>
       </div>
+      <div class="field" id="startTimeWrap" style="display:none">
+        <label for="startTime">Время начала урока (необязательно, ЧЧ:ММ)</label>
+        <input id="startTime" type="text" maxlength="5" placeholder="08:30">
+      </div>
       <div class="field">
         <label for="diff">Сложность: <b id="diffVal">5</b> из 10</label>
         <input id="diff" type="range" min="1" max="10" value="5">
@@ -323,6 +327,12 @@ window.onerror = function (msg, url, line) {
       <button type="button" id="exp" class="btn ghost">Показать расписание текстом</button>
       <textarea id="csvOut" rows="6" readonly style="display:none"></textarea>
       <p id="expMsg" class="io-msg"></p>
+      <h2 style="margin-top:14px">Резервная копия JSON</h2>
+      <p class="muted" style="margin:4px 0 8px">Сохраняет расписание и настройки. Скопируйте текст для переноса на другое устройство.</p>
+      <button type="button" id="expJson" class="btn ghost">Создать JSON-копию</button>
+      <textarea id="jsonOut" rows="6" placeholder="Здесь появится JSON-копия"></textarea>
+      <button type="button" id="impJson" class="btn ghost">Восстановить из JSON</button>
+      <p id="jsonMsg" class="io-msg"></p>
     </div>
 
     <div class="io">
@@ -627,6 +637,16 @@ window.onerror = function (msg, url, line) {
   var sel = todayIdx();   // выбранный день (по умолчанию — сегодня)
   var storageOk = true;
 
+  function sortDayItems(items) {
+    items.sort(function (a, b) {
+      var at = a && a.t === 'Урок' && TIME_RE.test(a.startTime || '');
+      var bt = b && b.t === 'Урок' && TIME_RE.test(b.startTime || '');
+      if (at && bt) return toMin(a.startTime) - toMin(b.startTime);
+      if (at !== bt) return at ? -1 : 1;
+      return 0;
+    });
+    return items;
+  }
   function save() {
     try { localStorage.setItem(KEY, JSON.stringify({ days: days })); storageOk = true; }
     catch (e) { storageOk = false; }
@@ -870,7 +890,7 @@ window.onerror = function (msg, url, line) {
 
       var info = el('div', 'info');
       info.appendChild(el('div', 't', it.n));
-      info.appendChild(el('div', 'm', it.t + ' · ' + it.m + ' мин · ' + share + '% нагрузки'));
+      info.appendChild(el('div', 'm', it.t + ' · ' + (it.startTime || it.m + ' мин') + ' · ' + share + '% нагрузки'));
 
       var c3 = el('div');
       c3.appendChild(el('span', 'pill ' + (it.d <= 3 ? 'good' : it.d <= 6 ? 'warn' : 'bad'), String(it.d)));
@@ -893,6 +913,9 @@ window.onerror = function (msg, url, line) {
   diffEl.addEventListener('change', showDiff);
   nameEl.addEventListener('input', function () { errorEl.textContent = ''; });
   minEl.addEventListener('input', function () { errorEl.textContent = ''; });
+  $('type').addEventListener('change', function () {
+    $('startTimeWrap').style.display = this.value === 'Урок' ? '' : 'none';
+  });
 
   // Добавление в выбранный день
   $('form').addEventListener('submit', function (e) {
@@ -904,7 +927,15 @@ window.onerror = function (msg, url, line) {
       return;
     }
     var t = typeEl.value;
-    days[sel].push({ t: t, n: nameEl.value.trim() || t, d: Number(diffEl.value), m: m });
+    var startTime = $('startTime').value.trim();
+    if (t === 'Урок' && startTime && !TIME_RE.test(startTime)) {
+      errorEl.textContent = 'Время укажите в формате ЧЧ:ММ, например 08:30.';
+      $('startTime').focus(); return;
+    }
+    if (t !== 'Урок') startTime = '';
+    days[sel].push({ t: t, n: nameEl.value.trim() || t, d: Number(diffEl.value), m: m, startTime: startTime });
+    sortDayItems(days[sel]);
+    $('startTime').value = '';
     save();
     errorEl.textContent = '';
     nameEl.value = '';
@@ -1025,6 +1056,7 @@ window.onerror = function (msg, url, line) {
 
     if ($('replace').checked) days = fresh;
     else for (var i = 0; i < 7; i++) days[i] = days[i].concat(fresh[i]);
+    for (var si = 0; si < 7; si++) sortDayItems(days[si]);
     save();
     render();
     say('Импортировано записей: ' + ok + (skipped ? ', пропущено строк с ошибками: ' + skipped : '') + '.', true);
@@ -1086,6 +1118,59 @@ window.onerror = function (msg, url, line) {
     try { out.setSelectionRange(0, out.value.length); } catch (e) { /* не поддерживается */ }
     msg.textContent = 'Записей: ' + count + '. Текст выделен: скопируйте его (удерживайте палец на тексте) и сохраните.';
     msg.className = 'io-msg ok';
+  });
+
+  // ---------- Полная JSON-копия расписания и настроек ----------
+  $('expJson').addEventListener('click', function () {
+    var out = { format: 'planner-simple-backup', version: 1, exportedAt: new Date().toISOString(), days: days, settings: settings };
+    $('jsonOut').value = JSON.stringify(out, null, 2);
+    $('jsonOut').focus(); $('jsonOut').select();
+    try { $('jsonOut').setSelectionRange(0, $('jsonOut').value.length); } catch (e) {}
+    $('jsonMsg').textContent = 'Копия создана. Скопируйте выделенный текст.';
+    $('jsonMsg').className = 'io-msg ok';
+  });
+  $('impJson').addEventListener('click', function () {
+    try {
+      var data = JSON.parse($('jsonOut').value);
+      if (!data || !data.days || data.days.length !== 7) throw new Error('В копии должно быть семь дней.');
+      var next = [], i, j, item, day;
+      for (i = 0; i < 7; i++) {
+        day = data.days[i];
+        if (!(day instanceof Array)) throw new Error('Повреждён один из дней.');
+        next[i] = [];
+        for (j = 0; j < day.length; j++) {
+          item = day[j];
+          if (!item || !/^(Урок|Кружок|Домашка)$/.test(item.t) || typeof item.n !== 'string' ||
+              !isInt(Number(item.d)) || Number(item.d) < 1 || Number(item.d) > 10 ||
+              !isInt(Number(item.m)) || Number(item.m) < 5 || Number(item.m) > 600) throw new Error('Найдена некорректная запись.');
+          var copy = { t: item.t, n: item.n.slice(0, 40), d: Number(item.d), m: Number(item.m) };
+          if (item.t === 'Урок' && TIME_RE.test(item.startTime || '')) copy.startTime = item.startTime;
+          next[i].push(copy);
+        }
+        sortDayItems(next[i]);
+      }
+      if (!window.confirm('Заменить текущее расписание данными из JSON-копии?')) return;
+      days = next;
+      if (data.settings && typeof data.settings === 'object') {
+        var restored = data.settings;
+        if (inList(OPTIONS.theme, restored.theme)) settings.theme = restored.theme;
+        if (inList(ACCENTS, restored.accent)) settings.accent = restored.accent;
+        if (inList(OPTIONS.city, restored.city)) settings.city = restored.city;
+        if (inList(OPTIONS.strict, restored.strict)) settings.strict = restored.strict;
+        if (typeof restored.weather === 'boolean') settings.weather = restored.weather;
+        if (typeof restored.sleep === 'boolean') settings.sleep = restored.sleep;
+        if (isInt(restored.age) && restored.age >= 6 && restored.age <= 99) settings.age = restored.age;
+        if (TIME_RE.test(restored.bed || '')) settings.bed = restored.bed;
+        if (TIME_RE.test(restored.wake || '')) settings.wake = restored.wake;
+        saveSettings(); applySettings(); syncSleepInputs(); renderSettings();
+      }
+      save(); render();
+      $('jsonMsg').textContent = 'Расписание восстановлено. Записей: ' + days.reduce(function (n, d) { return n + d.length; }, 0) + '.';
+      $('jsonMsg').className = 'io-msg ok';
+    } catch (e) {
+      $('jsonMsg').textContent = 'Ошибка JSON: ' + (e.message || 'проверьте текст копии.');
+      $('jsonMsg').className = 'io-msg err';
+    }
   });
 
   // ---------- Окно настроек ----------
